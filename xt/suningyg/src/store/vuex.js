@@ -22,6 +22,15 @@ export default new Vuex.Store({
         dat: {
             img: "",
             price: ""
+        },
+        //加入购物车出现菜单
+        card: {
+            isShow: false
+        },
+        //点击购买数量跳转到购物车页面
+        gnum: {
+            snum: 1,
+            showcar: false
         }
     },
     //更改store状态提交mutations
@@ -34,6 +43,12 @@ export default new Vuex.Store({
         },
         setDat(state, newValue) {
             state.dat = newValue
+        },
+        setCard(state, newValue) {
+            state.card = newValue
+        },
+        setGnum(state, newValue) {
+            state.gnum = newValue
         }
     },
     //提交mutation
@@ -46,6 +61,12 @@ export default new Vuex.Store({
         },
         setDat(context, newValue) {
             context.commit('setDat', newValue)
+        },
+        setCard(context, newValue) {
+            context.commit('setCard', newValue)
+        },
+        setGnum(context, newValue) {
+            context.commit('setGnum', newValue)
         }
     },
     //获得
@@ -58,6 +79,12 @@ export default new Vuex.Store({
         },
         getDat(state) {
             return state.dat
+        },
+        getCard(state) {
+            return state.card
+        },
+        getGnum(state) {
+            return state.gnum
         }
     }
 })

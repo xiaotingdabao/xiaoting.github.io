@@ -1,12 +1,12 @@
 <template>
   <div>
     <Goodsbuy />
-    <!-- <Goodsaction /> -->
+    <Goodsaction />
   </div>
 </template>
 <script>
 import Vue from "vue/dist/vue";
-// import Goodsaction from "../component/goodsaction.vue";
+import Goodsaction from "../component/goodsaction.vue";
 import Goodsbuy from "../component/goodsbuy.vue";
 import router from "../routers/index.js";
 //引入状态管理
@@ -34,7 +34,7 @@ export default {
     }
   },
   components: {
-    // Goodsaction,
+    Goodsaction,
     Goodsbuy
   },
   mounted() {

@@ -3,7 +3,7 @@
     <van-notice-bar :scrollable="false">
       <p>登陆后同步电脑与手机购物车的商品</p>
       <!-- <a href="###">去登录</a> -->
-      <router-link to="/mine">去登录</router-link>
+      <router-link to="/mine" v-if="(user.username=='')">去登录</router-link>
     </van-notice-bar>
     <div class="shops">
       <div class="shop">
@@ -56,10 +56,7 @@
                     <div>
                       <div class="cmmdty">
                         <div class="img" sap-modid="3" sa-data="{'eleid':'771003002'}">
-                          <img
-                            class="main-img"
-                            src="//image.suning.cn/uimg/b2c/newcatentries/0070167461-000000000102388019_1.jpg_200w_200h_4e"
-                          />
+                          <img class="main-img" :src="dat.img" />
                         </div>
                         <div class="info">
                           <div class="info-top" sap-modid="3" sa-data="{'eleid':'771003002'}">
@@ -72,23 +69,14 @@
                           </div>
                           <div class="info-bottom">
                             <p class="price">
-                              <span class="f22 price-icon">¥</span>
-                              <span class="f28">69.</span>
-                              <span class="f20">00</span>
+                              <span class="f22 price-icon" v-text="dat.price"></span>
+                              <!-- <span class="f28">69.</span> -->
+                              <span class="f20" style="margin-left: 22px;">.00</span>
                             </p>
                             <div class="counter">
-                              <button
-                                sap-modid="3"
-                                sa-data="{'eleid':'771003006'}"
-                                disabled
-                                class="gray-reduce"
-                              ></button>
-                              <input maxlength="2" type="number" value="1" />
-                              <button
-                                sap-modid="3"
-                                sa-data="{'eleid':'771003005'}"
-                                class="black-add"
-                              ></button>
+                              <button class="gray-reduce" @click="reduce"></button>
+                              <input maxlength="2" type="number" :value="gnum.snum" />
+                              <button class="black-add" @click="add"></button>
                             </div>
                           </div>
                         </div>
@@ -115,172 +103,6 @@
         </div>
       </div>
     </div>
-    <div class="shops">
-      <div class="shop">
-        <div class="left">
-          <label class="am-checkbox-wrapper">
-            <span class="am-checkbox am-checkbox-checked">
-              <input type="checkbox" class="am-checkbox-input" checked />
-              <span class="am-checkbox-inner"></span>
-            </span>
-          </label>
-        </div>
-        <div class="right">
-          <div class="shopinfo">
-            <div class="shopicon icon-cShop"></div>
-            <a
-              class="shopname next"
-              href="//shop.m.suning.com/0070073727.html"
-              sap-modid="3"
-              sa-data="{'eleid':'771003001'}"
-            >宏金远航电脑专营店</a>
-          </div>
-          <div class="tools">
-            <div class="shoptool">
-              <div class="usable-coupon" sap-modid="3" sa-data="{'eleid':'771003007'}"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class>
-        <div class="cmmdty-layout">
-          <div>
-            <div class="am-swipe">
-              <div class="am-swipe-cover"></div>
-              <div class="am-swipe-actions am-swipe-actions-right">
-                <div
-                  class="am-swipe-btn"
-                  role="button"
-                  style="background-color: rgb(255, 102, 0); color: white; width: 50px;"
-                >
-                  <div class="am-swipe-btn-text">删除</div>
-                </div>
-              </div>
-              <div class="am-swipe-content" style="touch-action: pan-y;">
-                <div class="layoutWapper">
-                  <div class="left out-side-height">
-                    <label class="am-checkbox-wrapper">
-                      <span class="am-checkbox am-checkbox-checked">
-                        <input type="checkbox" class="am-checkbox-input" checked />
-                        <span class="am-checkbox-inner"></span>
-                      </span>
-                    </label>
-                  </div>
-                  <div class="right">
-                    <div>
-                      <div class="cmmdty">
-                        <div class="img" sap-modid="3" sa-data="{'eleid':'771003002'}">
-                          <img
-                            class="main-img"
-                            src="//imgservice.suning.cn/uimg1/b2c/image/zRpZP5xgOn1jAoorj-yyDg.jpg_200w_200h_4e"
-                          />
-                          <img
-                            class="blast"
-                            src="http://image.suning.cn/uimg/pcms/label07/209334202218921130926500_17.png"
-                          />
-                        </div>
-                        <div class="info">
-                          <div class="info-top" sap-modid="3" sa-data="{'eleid':'771003002'}">
-                            <p
-                              class="ellipsis multi-2"
-                            >联想Lenovo 小新13 13.3英寸 I5-10210U 8G 256G MX250 2G 定制 便携超极本 办公商务本 娱乐游戏 小新 非pro 全新正品 笔记本电脑</p>
-                          </div>
-                          <div class="info-middle">
-                            <div class="services">
-                              <div
-                                class="func-detail ellipsis multi-1"
-                                sap-modid="3"
-                                sa-data="{'eleid':'771003004'}"
-                              >
-                                <span>【小新13 i5-10210U 独显】</span>
-                                <span>主流【8G 256G纯固态】定制</span>
-                              </div>
-                              <div class="service-detail">
-                                <span
-                                  class="service-mt"
-                                  sap-modid="3"
-                                  sa-data="{'eleid':'771003003'}"
-                                >
-                                  购买服务
-                                  <i class="service"></i>
-                                </span>
-                              </div>
-                            </div>
-                            <div class="sybmol">
-                              <label class="mt12"></label>
-                            </div>
-                          </div>
-                          <div class="info-bottom">
-                            <p class="price">
-                              <span class="f22 price-icon">¥</span>
-                              <span class="f28">4699.</span>
-                              <span class="f20">00</span>
-                            </p>
-                            <div class="counter">
-                              <button
-                                sap-modid="3"
-                                sa-data="{'eleid':'771003006'}"
-                                disabled
-                                class="gray-reduce"
-                              ></button>
-                              <input maxlength="2" type="number" value="1" />
-                              <button
-                                sap-modid="3"
-                                sa-data="{'eleid':'771003005'}"
-                                class="black-add"
-                              ></button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="sub-good">
-            <a
-              class="eg-item next"
-              href="////m.suning.com/product/0070073727/000000000188077915.html"
-            >
-              <label class="item-tag">赠品</label>
-              <p
-                class="item-name ellipsis multi-1"
-              >【赠品 两件套】通用电脑包+有线鼠标 注意：此链接为赠品链接 单拍不发货 请勿下单！！！赠完即止。 黑色</p>
-              <label class="item-price">
-                ×1
-                <em>&gt;</em>
-              </label>
-            </a>
-            <a
-              class="eg-item next"
-              href="////m.suning.com/product/0070073727/000000000188077904.html"
-            >
-              <label class="item-tag">赠品</label>
-              <p
-                class="item-name ellipsis multi-1"
-              >【赠品 三件套】通用屏幕贴膜+ 通用键盘贴膜+鼠标垫 注意：此链接为赠品链接 单拍不发货 请勿下单！！！赠完即止。 黑色</p>
-              <label class="item-price">
-                ×1
-                <em>&gt;</em>
-              </label>
-            </a>
-            <a
-              class="eg-item next"
-              href="////m.suning.com/product/0070073727/000000010972705713.html"
-            >
-              <label class="item-tag">赠品</label>
-              <p class="item-name ellipsis multi-1">【晒图返】晒图写体验 联系客服返20元 签收72小时内 3张以上的晒图</p>
-              <label class="item-price">
-                ×1
-                <em>&gt;</em>
-              </label>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -288,10 +110,52 @@ import Vue from "vue/dist/vue";
 import { NoticeBar } from "vant";
 import { Panel } from "vant";
 import "../asserts/cart.css";
+// import { Dialog } from "vant";
+//引入状态管理
+import storei from "../store/index";
+import store from "../store/vuex";
 
 Vue.use(Panel);
 Vue.use(NoticeBar);
-export default {};
+// Dialog({ message: "提示" });
+export default {
+  data() {
+    return {
+      // islo:true;
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
+    },
+    dat() {
+      return this.$store.getters.getDat;
+    },
+    gnum() {
+      return this.$store.getters.getGnum;
+    }
+  },
+  methods: {
+    reduce() {
+      if (this.gnum.snum <= 1) {
+        this.gnum.snum = 1;
+      } else {
+        this.gnum.snum--;
+      }
+      this.$store.dispatch("setGnum", {
+        snum: this.gnum.snum,
+        showcar: true
+      });
+    },
+    add() {
+      this.gnum.snum++;
+      this.$store.dispatch("setGnum", {
+        snum: this.gnum.snum,
+        showcar: true
+      });
+    }
+  }
+};
 </script>
 <style lang="scss">
 .body {

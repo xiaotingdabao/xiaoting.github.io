@@ -17,7 +17,7 @@ Vue.use(Checkbox);
 export default {
   data() {
     return {
-      checked: "",
+      checked: true,
       onSubmit: ""
     };
   },

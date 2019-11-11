@@ -634,15 +634,12 @@
     <div
       class="cover-mask cover-mask-toggle"
       style="transform-origin: 0px 0px; opacity: 1; transform: scale(1, 1);"
-      v-show="isShow"
+      v-show="card.isShow"
     ></div>
-    <div class="cover-toggle" style="display: none;" v-show="isShow">
+    <div class="cover-toggle" style="display: none;" v-show="card.isShow">
       <header class="cover-head">
         <div class="img-box">
-          <img
-            src="https://imgservice.suning.cn/uimg1/b2c/image/zRpZP5xgOn1jAoorj-yyDg.jpg_100w_100h_4e_100Q"
-            alt
-          />
+          <img :src="dat.img" alt />
         </div>
         <div class="product">
           <div class="price">
@@ -665,27 +662,27 @@
             <li>
               <h2 class="h-inline">型号</h2>
               <div class="clusteritems">
-                <label>【小新pro R5-3550H 标压】</label>
-                <label>【小新13 i5-10210U 独显】</label>
-                <label>【小新13 i7-10510U 独显】</label>
-                <label>【小新pro i5-10210U 集显】</label>
+                <label @click="ishao1" :class="hao1?'checked':''">【小新pro R5-3550H 标压】</label>
+                <label @click="ishao2" :class="hao2?'checked':''">【小新13 i5-10210U 独显】</label>
+                <label @click="ishao3" :class="hao3?'checked':''">【小新13 i7-10510U 独显】</label>
+                <label @click="ishao4" :class="hao4?'checked':''">【小新pro i5-10210U 集显】</label>
               </div>
             </li>
             <li>
               <h2>选择配置</h2>
               <div class="clusteritems">
-                <label>主流【8G 256G纯固态】定制</label>
-                <label>热卖【8G 512G纯固态】定制</label>
-                <label>高配【8G 1TB纯固态】定制</label>
+                <label @click="isSelect1" :class="select1?'checked':''">主流【8G 256G纯固态】定制</label>
+                <label @click="isSelect2" :class="select2?'checked':''">热卖【8G 512G纯固态】定制</label>
+                <label @click="isSelect3" :class="select3?'checked':''">高配【8G 1TB纯固态】定制</label>
               </div>
             </li>
           </ul>
           <div class="number">
             <h2>数量</h2>
             <div class="item">
-              <a class="decrease overflow">-</a>
-              <input type="number" min="1" value="1" max="99" id="count-num" />
-              <a class="increase">+</a>
+              <a class="decrease overflow" @click="decrease">-</a>
+              <input type="number" min="1" :value="snum" max="99" id="count-num" />
+              <a class="increase" @click="increase">+</a>
             </div>
           </div>
           <div class="yb-wrap">
@@ -696,26 +693,13 @@
         </div>
       </div>
       <div class="cover-action">
-        <a href="###" class="addtocart">立即购买</a>
-        <a href="###" class="buy">加入购物车</a>
+        <a href="###" class="addtocart" @click="gobuy">立即购买</a>
+        <a href="###" class="buy" @click="gobuy">加入购物车</a>
       </div>
-      <div class="cover-close">
+      <div class="cover-close" @click="noShow">
         <a href="###" class="close"></a>
       </div>
     </div>
-    <van-goods-action v-show="!isShow">
-      <van-goods-action-icon
-        icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAABkCAYAAAB0F0VpAAABYWlDQ1BrQ0dDb2xvclNwYWNlRGlzcGxheVAzAAAokWNgYFJJLCjIYWFgYMjNKykKcndSiIiMUmB/yMAOhLwMYgwKicnFBY4BAT5AJQwwGhV8u8bACKIv64LMOiU1tUm1XsDXYqbw1YuvRJsw1aMArpTU4mQg/QeIU5MLikoYGBhTgGzl8pICELsDyBYpAjoKyJ4DYqdD2BtA7CQI+whYTUiQM5B9A8hWSM5IBJrB+API1klCEk9HYkPtBQFul8zigpzESoUAYwKuJQOUpFaUgGjn/ILKosz0jBIFR2AopSp45iXr6SgYGRiaMzCAwhyi+nMgOCwZxc4gxJrvMzDY7v////9uhJjXfgaGjUCdXDsRYhoWDAyC3AwMJ3YWJBYlgoWYgZgpLY2B4dNyBgbeSAYG4QtAPdHFacZGYHlGHicGBtZ7//9/VmNgYJ/MwPB3wv//vxf9//93MVDzHQaGA3kAFSFl7jXH0fsAAAsBSURBVHgB7VwHqBS/E55n772ggl0UsTfE3itWFBEVC6Ki2HtDxYJdsSKKXVGs2MWKgg1RURHFig079q73y5c/Wfb25c5793bvZt8/A3u3O5vNJvNtksnMJAkBQWSInQRSsSuRKZCUgAGG6YdggDHAMJUA02KZFmOAYSoBpsUyLcYAw1QCTItlWowBhqkEmBbLtBgDDFMJMC2WaTEGGKYSYFos02IMMEwlwLRYaZiWK9nFunPnDl29epX+/v1LlSpVorJlyyY7z1hmkOKA+fz5M82YMYN27NgRJMe2bdvStGnTKFu2bEF8rhcJKcm1/OnTJ+rVqxddu3ZNK2+0ms2bN1P27Nm19zkxU8zg7wQlISGB6tevT40bN6ZUqf5XzVu3blH37t3pw4cPnDDQlsV3LQaxIxs3bqSDBw/S7du36efPn7JiGEv+/PkjzwHK9OnTqWvXrvJ6z549NGbMGDnegJE6dWoLrLRp01Lp0qWpRYsW1KdPH4svH4zjj6+AASh9+/al06dPhxSZExSV0AmO4tv/a9asKUEHcPEmX3VlaCnhQMmXLx/NmTPHail24Xbo0IEWLVpEBQoUsLODzi9cuECrV68O4sXtAoO/X6hTp06B4sWLy2PhwoWBL1++BH79+mUdkdbD/szXr18DK1assPJt3bp1pNl4ms5XXVmFChVIgCE/4hs3blCmTJlc+aAxNpUpU0aOQWnSpJFjF7rEeJKvujI10ENg6dKlc01uGFPUuPL7929LiXDtBVFk5Ctgoqifbx8xwGig4zDP8RUwWbNmlWLMnDkzYSxwk+zaGqwH8QaH/eD/7ds32rZtG+XPn58yZMhAW7duJaGdyQmhm8AcOnSIhg4dak1CYb7ZsmVL/Gxrnup8LmQuZuyWKnv9+nUXcgydxe7duwMlS5a03jd48ODQiT2+w7org+l+586dsmFAffXa+IhJ6Ny5cy2zDMw+oQyibrZWXV6sgYE/RVG9evWocOHC6tKzf4DTrFkzK397GSxmDE5YAwPDpCK3B3uVr+7f/i7RY+mSeM5jDQw8j4pOnTpFMER6TYcPHyYcimBtiAexBgaaETyPILQemO69BAeADBs2zJr5N23alKpVqxYPXIi9uvzx40fq1q0bwckFghIAv8mECRO0AoPda/ny5bRr1y56+fKlTJM3b15q166dVIfhf9HR8ePHadCgQQSTDKhUqVJSNc+VK5cuuec89sBAAu/fv6cePXpY4IDXs2dPwhftNGRu376dcOioX79+NHbsWN0tatKkCT18+FDeAyiYw+TOnVubNhZMXwADQQAcdCvJGYwh6EuXLmnlCuuycAfIe+fPnyf4duJJrMcYu2By5MhhWYDt/KSc27W8cM/Fq/uyl8ldg5M9Zw/O7T4SjDPw+QtHV9Cbnj9/Tq9evQriqQuMM34hXwGDgVt1NyNGjKCMGTMmkjPuC++mHPzfvn0r7+fMmVMO/qHGF7Qk1ZrsgRqJMo8lw2OTj6vZd+zY0bJjwR0sNKiw+SsXcrhEQosLrF271sq3ZcuW4ZLH7J6vWowQmmW7mj9/vmwZyvOIjxmm+9GjR1OrVq3kt22fwYMBlXj27Nn09OlTeR8/aCkq7AnXCGPiQL7RyiAsCBFqM6JZQhGC+2CIhM3LTmryqOYp9nvqvHLlytLF4ARU3Y/lv6+AgWDwdSPE6MCBA3T37l1rQmgXmhOccKCgxQlTv2wpAwcOdN0BZy9XUs59B4y9cqLDt7oheBzheVQWAoADKzG+fgCjuitMHhGfplRipMPBjXwNjFOYAAexyQoc530OM3pnmUJd8/tUQpU0Aj4caTCliKC9RKlhvoFbOp5mlkSFCsNIUS3GXk94HuHkQncH0328rMT2MiXlPMUCkxQhcEyboroyjgKOtkwGmGgl5/FzBhiPBRxt9gaYaCXn8XMGGI8FHG32BphoJefxcwYYjwUcbfYGmGgl5/FzvgMGrmTM5lM6+QqYdevWUfny5enEiRNJxgW+HCwV1B3IDGAD9HDHjx8/kvzeaB9g58E8efKk5dd3Vgr7wMB/smrVKsuM70yDa8QGNGrUKOgWtirBXjI6un//Pj169EjGlunuK16tWrVo06ZN6tLTf3bAjBo16p+rua5cuUJwaoUiWJmRRkfYAEhF25w9e5aOHDkSlKxLly7S6BnEFBeI7kyfPr2T7dk1O2BQ04YNG9LMmTOtSsPJdfToUSpXrtw/l2JMnDgxJCjIUG1jgnPs1OQEpnbt2lq3AbpRN1dK4/3hiCUw+DKxtE8RuiB4HRcvXkzVq1dXbO2/V181nHBZsmTRvtMLJjtgSpQoQQULFrTqii8VoCCGDOMPDh3BVTx58mT5LPJwkxBA+Pr1aypSpIib2YbNix0w9g3gMNDOmjWL8uTJI3fpc0ZdomZYDYB4ZLWDH7qycFS3bl3rNrqyUIQQpyVLlkhFBA43KB3o5mJF7IBBxSHscePGyXEFy/seP35MiF2G0O079IGP3ZgA3NKlSyOSGWLT1OAvFtuGDDJHjNq7d+9kFE6dOnXkvmf2hVQRvSw5iYT+zooQXSn88wHRHQXmzZsXEAN/QAz8gSpVqgRq1KgREBEvclOfNWvWBCpWrBgQG8UFRAzzP+uwYcMGGW1pTyjCoCzegwcP5LkIi7Inids5uxaDLmPkyJFyTMGCWBDCkOC3xzp8LC7CeIKvGQuasIAJ6//dIrRUjFU6QpRNqLU3uvTJ4bEDBpVp3ry5VSesi8FM/9ixY3Tz5k0ZJ4YdMgAM+OKTlpNJTP7c0MjwMUA1b9Omjdz5TxUESwxV4LniefnPChhU/N69exIAbHuFA+MA5jHo38ePHy/nGIjexx4Ae/fupX379smwJIACbQyaE45ixYrJHTSU8JRQO3furFjWUkCLIU4Q9wwNDC13wIAB8hZ251i5cqVcwWZP6+U5G2AguAYNGtCzZ89kfTH4IpYYMWIwrzhVVexjiWUVWDALrQwAwrSC49y5c3IehK1NFGEeAmEXKlRIsej79+/W+yymOEFrQfD5lClTCK0TGzFAg4MSECtiAwzCVCdNmiRbBwCBWQUTS7QMHJEQIvUBLghfuZ2wVgaTVkxSFQkFQhu1iVaDwPQFCxbQ1KlTZaA5tMGqVauqRz3/ZwMMamrfkQJfOOY0WAsJdTgcoasDeOi+FDDORU0Yk+wT13D5IVoTC6NgFkL3iHkMFI9QK57D5RXtPVbA6CrRSwSK9+/fX3fL4gFEoU5b17qTN2/eRAwMnsd79+/fL1sMurPevXvrsvWM5yt/TLRSgA8GGl2kLQbvgbYH9RgEdfyRcAvEkti3GOxA/uLFi7AygaUgHGF5OMYcMUENShZqERPeOWTIEDpz5oxU3REHDW0OykasWg57YKCm4kgOYR8adEeY64AuX74s50PgO1sRNmHA/sxPnjyRygiAwPiEMQe+HIC8bNkyz10A7IFp37590IRTBxC2/IWDLRTBj4NWpQZvqMIY0KEgDB8+POgxpEFLEiYcws7lIFga1q9fT2JBrlxmGAu/DNtof2haFy9epKJFiyb6qoMkKS4iSYs5izLdoAUATGh7SnvDOIQFT3gf9txUIOrehfmQ18QWGK8rzj3//wutjDsIuvIZYHRSYcAzwDAAQVcEA4xOKgx4BhgGIOiKYIDRSYUBzwDDAARdEQwwOqkw4BlgGICgK4IBRicVBjwDDAMQdEUwwOikwoBngGEAgq4IBhidVBjwDDAMQNAVwQCjkwoDngGGAQi6IvwH8BsZIDmTamoAAAAASUVORK5CYII="
-      />
-      <van-goods-action-icon
-        icon="data:image/png;base64,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"
-      />
-      <van-goods-action-icon
-        icon="data:image/png;base64,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"
-      />
-      <van-goods-action-button type="danger" text="马上抢" @click="buyb" />
-      <van-goods-action-button type="warning" text="加入购物车" @click="buyb" />
-    </van-goods-action>
   </div>
 </template>
 <script>
@@ -725,16 +709,19 @@ import router from "../routers/index.js";
 //引入状态管理
 import storei from "../store/index";
 import store from "../store/vuex";
-import "vant/lib/index.css";
-import { GoodsAction, GoodsActionIcon, GoodsActionButton } from "vant";
 
-Vue.use(GoodsAction)
-  .use(GoodsActionIcon)
-  .use(GoodsActionButton);
 export default {
   data() {
     return {
-      isShow: false,
+      snum: 1,
+      hao1: false,
+      hao2: false,
+      hao3: false,
+      hao4: false,
+      select1: false,
+      select2: false,
+      select3: false,
+      // isShow: false,
       buyimg: [
         "//imgservice.suning.cn/uimg1/b2c/image/w2p94gFI8fduKHsisQBFvA.jpg_800w_800h_4e_100Q",
         "//imgservice.suning.cn/uimg1/b2c/image/wk3bedwH8xGwxXW46aRsow.jpg_800w_800h_4e_100Q",
@@ -762,12 +749,80 @@ export default {
   computed: {
     dat() {
       return this.$store.getters.getDat;
+    },
+    card() {
+      return this.$store.getters.getCard;
     }
   },
   methods: {
-    buyb() {
-      isShow = true;
+    gobuy() {
+      this.$store.dispatch("setGnum", {
+        snum: this.snum,
+        showcar: true
+      });
+      router.push({ name: "shopcart" });
+    },
+    decrease() {
+      if (this.snum <= 1) {
+        this.snum = 1;
+      } else {
+        this.snum--;
+      }
+    },
+    increase() {
+      if (this.snum >= 20) {
+        this.snum = 20;
+      } else {
+        this.snum++;
+      }
+    },
+    noShow() {
+      this.$store.dispatch("setCard", {
+        isShow: false
+      });
+    },
+    ishao1() {
+      this.hao1 = true;
+      this.hao2 = false;
+      this.hao3 = false;
+      this.hao4 = false;
+    },
+    ishao2() {
+      this.hao1 = false;
+      this.hao2 = true;
+      this.hao3 = false;
+      this.hao4 = false;
+    },
+    ishao3() {
+      this.hao1 = false;
+      this.hao2 = false;
+      this.hao3 = true;
+      this.hao4 = false;
+    },
+    ishao4() {
+      this.hao1 = false;
+      this.hao2 = false;
+      this.hao3 = false;
+      this.hao4 = true;
+    },
+    isSelect1() {
+      this.select1 = true;
+      this.select2 = false;
+      this.select3 = false;
+    },
+    isSelect2() {
+      this.select1 = false;
+      this.select2 = true;
+      this.select3 = false;
+    },
+    isSelect3() {
+      this.select1 = false;
+      this.select2 = false;
+      this.select3 = true;
     }
+    // onClickButton() {
+    //   this.$isShow = true;
+    // }
     //   getc() {
     //     this.$store.dispatch("setDat",{
     //     img = this.$route.params.img,
@@ -838,7 +893,7 @@ export default {
 }
 //加入购物车遮罩
 .cover-mask {
-  display: none;
+  // display: none;
   position: fixed;
   width: 100%;
   height: 100%;
