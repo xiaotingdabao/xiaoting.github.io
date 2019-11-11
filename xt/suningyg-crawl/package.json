@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "mongodb": "^3.3.3"
+  },
+  "dependencies": {
+    "bson": "^4.0.2",
+    "mongodb": "^3.3.3",
+    "require_optional": "^1.0.1",
+    "resolve-from": "^5.0.0"
+  }
+}
